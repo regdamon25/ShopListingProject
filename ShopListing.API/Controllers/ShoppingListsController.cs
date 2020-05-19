@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShopListing.API.Services;
 using ShopListing.API.Models;
 using AutoMapper;
+using ShopListing.API.ResourceParameters;
 
 namespace ShopListing.API.Controllers
 {
@@ -28,9 +29,10 @@ namespace ShopListing.API.Controllers
         [HttpGet()]
         [HttpHead]
 
-        public ActionResult<IEnumerable<ShoppingListDto>> GetShoppingLists(string theme, string searchQuery)
+        public ActionResult<IEnumerable<ShoppingListDto>> GetShoppingLists(
+            [FromQuery] ShoppingListResourceParameters shoppingListResourceParameters)
         {
-            var shoppingListsFromRepo = _shopListingRepository.GetShoppingLists(theme, searchQuery);
+            var shoppingListsFromRepo = _shopListingRepository.GetShoppingLists(shoppingListResourceParameters);
             return Ok(_mapper.Map<IEnumerable<ShoppingListDto>>(shoppingListsFromRepo));
         }
 

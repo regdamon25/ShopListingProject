@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShopListing.API.Entities;
 using ShopListing.API.DataAccess;
-
+using ShopListing.API.ResourceParameters;
 
 namespace ShopListing.API.Services
 {
@@ -124,24 +124,24 @@ namespace ShopListing.API.Services
             return _context.ShoppingLists.ToList<ShoppingList>();
         }
 
-        public IEnumerable<ShoppingList> GetShoppingLists(string theme, string searchQuery)
+        public IEnumerable<ShoppingList> GetShoppingLists(ShoppingListResourceParameters shoppingListResourceParameters)
         {
-            if(string.IsNullOrWhiteSpace(theme) && string.IsNullOrWhiteSpace(searchQuery))
+            if(string.IsNullOrWhiteSpace(shoppingListResourceParameters.Theme) && string.IsNullOrWhiteSpace(shoppingListResourceParameters.SearchQuery))
             {
                 return GetShoppingLists();
             }
 
             var collection = _context.ShoppingLists as IQueryable<ShoppingList>;
 
-            if(!string.IsNullOrWhiteSpace(theme))
+            if(!string.IsNullOrWhiteSpace(shoppingListResourceParameters.Theme))
             {
-                theme = theme.Trim();
+                var theme = shoppingListResourceParameters.Theme.Trim();
                 collection = collection.Where(sl => sl.Theme == theme);
             }
 
-            if(!string.IsNullOrWhiteSpace(searchQuery))
+            if(!string.IsNullOrWhiteSpace(shoppingListResourceParameters.SearchQuery))
             {
-                searchQuery = searchQuery.Trim();
+                var searchQuery = shoppingListResourceParameters.SearchQuery.Trim();
                 collection = collection.Where(sl => sl.Theme.Contains(searchQuery)
                 || sl.Name.Contains(searchQuery));
             }

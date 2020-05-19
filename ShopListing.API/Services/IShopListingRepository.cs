@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ShopListing.API.Entities;
 using System.Linq;
 using System.Threading.Tasks;
+using ShopListing.API.ResourceParameters;
 
 namespace ShopListing.API.Services
 {
@@ -21,7 +22,7 @@ namespace ShopListing.API.Services
         IEnumerable<ShoppingList> GetShoppingLists();
 
         ShoppingList GetShoppingList(Guid shoppingListId);
-        IEnumerable<ShoppingList> GetShoppingLists(string theme, string searchQuery);
+        IEnumerable<ShoppingList> GetShoppingLists(ShoppingListResourceParameters shoppingListResourceParameters);
 
         IEnumerable<ShoppingList> GetShoppingLists(IEnumerable<Guid> shoppingListIds);
 
