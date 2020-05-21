@@ -63,5 +63,13 @@ namespace ShopListing.API.Controllers
                 new { shoppingListId = shoppingListToReturn.Id },
                 shoppingListToReturn);
         }
+
+        [HttpOptions]
+
+        public IActionResult GetShoppingListOptions()
+        {
+            Response.Headers.Add("Allow", "GET,OPTIONS,POST");
+            return Ok();
+        }
     }
 }

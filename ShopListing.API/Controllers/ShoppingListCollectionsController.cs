@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ShopListing.API.Helpers;
 
 namespace ShopListing.API.Controllers
 {
@@ -24,6 +25,30 @@ namespace ShopListing.API.Controllers
                 throw new ArgumentNullException(nameof(mapper));
         }
 
+        [HttpGet("({ids})", Name = "GetShoppingListCollection")]
+
+        public IActionResult GetShoppingListCollection(
+            [FromRoute]
+            [ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
+            {
+                if(ids == null)
+                {
+                    return BadRequest();
+                }
+
+                var shoppingListEntities = _shopListingRepository.GetShoppingLists(ids);
+
+                if(ids.Count() != shoppingListEntities.Count())
+                {
+                    return NotFound();
+                }
+
+                var shoppingListsToReturn = _mapper.Map<IEnumerable<ShoppingListDto>>(shoppingListEntities);
+
+                return Ok(shoppingListsToReturn);
+            }
+        
+
         [HttpPost]
 
         public ActionResult<IEnumerable<ShoppingListDto>> CreateShoppingListCollection(
@@ -38,7 +63,12 @@ namespace ShopListing.API.Controllers
 
             _shopListingRepository.Save();
 
-            return Ok();
+            var shoppingListCollectionToReturn = _mapper.Map<IEnumerable<ShoppingListDto>>(shoppingListEntities);
+            var idsAsString = string.Join(",", shoppingListCollectionToReturn.Select(sl => sl.Id));
+
+            return CreatedAtRoute("GetShoppingListCollection",
+            new { ids = idsAsString },
+            shoppingListCollectionToReturn);
         }
     }
 }
