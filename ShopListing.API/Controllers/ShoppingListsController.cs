@@ -36,7 +36,7 @@ namespace ShopListing.API.Controllers
             return Ok(_mapper.Map<IEnumerable<ShoppingListDto>>(shoppingListsFromRepo));
         }
 
-        [HttpGet("{shoppingListId}")]
+        [HttpGet("{shoppingListId}", Name = "GetShoppingList")]
         public IActionResult GetShoppingList(Guid shoppingListId)
         {
             var shoppingListFromRepo = _shopListingRepository.GetShoppingList(shoppingListId);
@@ -46,7 +46,22 @@ namespace ShopListing.API.Controllers
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<IEnumerable<ShoppingListDto>>(shoppingListFromRepo));
+            return Ok(_mapper.Map<ShoppingListDto>(shoppingListFromRepo));
+        }
+
+        [HttpPost]
+
+        public ActionResult<ShoppingListDto> CreateShoppingList(ShoppingListForCreationDto shoppingList)
+        {
+            var shoppingListEntity = _mapper.Map<Entities.ShoppingList>(shoppingList);
+
+            _shopListingRepository.AddShoppingList(shoppingListEntity);
+            _shopListingRepository.Save();
+
+            var shoppingListToReturn = _mapper.Map<ShoppingListDto>(shoppingListEntity);
+            return CreatedAtRoute("GetShoppingList",
+                new { shoppingListId = shoppingListToReturn.Id },
+                shoppingListToReturn);
         }
     }
 }
