@@ -22,6 +22,7 @@ namespace ShopListing.API.Services
         IEnumerable<ShoppingList> GetShoppingLists();
 
         ShoppingList GetShoppingList(Guid shoppingListId);
+
         IEnumerable<ShoppingList> GetShoppingLists(ShoppingListResourceParameters shoppingListResourceParameters);
 
         IEnumerable<ShoppingList> GetShoppingLists(IEnumerable<Guid> shoppingListIds);

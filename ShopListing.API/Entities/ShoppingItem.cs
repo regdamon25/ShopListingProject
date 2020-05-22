@@ -17,6 +17,10 @@ namespace ShopListing.API.Entities
         public string Name { get; set; }
 
         [Required]
+        [MaxLength(50)]
+        public string Category { get; set; }
+
+        [Required]
         public decimal Price { get; set; }
 
         [ForeignKey("ShoppingListId")]

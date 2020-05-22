@@ -30,24 +30,24 @@ namespace ShopListing.API.Controllers
         public IActionResult GetShoppingListCollection(
             [FromRoute]
             [ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
+        {
+            if (ids == null)
             {
-                if(ids == null)
-                {
-                    return BadRequest();
-                }
-
-                var shoppingListEntities = _shopListingRepository.GetShoppingLists(ids);
-
-                if(ids.Count() != shoppingListEntities.Count())
-                {
-                    return NotFound();
-                }
-
-                var shoppingListsToReturn = _mapper.Map<IEnumerable<ShoppingListDto>>(shoppingListEntities);
-
-                return Ok(shoppingListsToReturn);
+                return BadRequest();
             }
-        
+
+            var shoppingListEntities = _shopListingRepository.GetShoppingLists(ids);
+
+            if (ids.Count() != shoppingListEntities.Count())
+            {
+                return NotFound();
+            }
+
+            var shoppingListsToReturn = _mapper.Map<IEnumerable<ShoppingListDto>>(shoppingListEntities);
+
+            return Ok(shoppingListsToReturn);
+        }
+
 
         [HttpPost]
 
@@ -67,8 +67,8 @@ namespace ShopListing.API.Controllers
             var idsAsString = string.Join(",", shoppingListCollectionToReturn.Select(sl => sl.Id));
 
             return CreatedAtRoute("GetShoppingListCollection",
-            new { ids = idsAsString },
-            shoppingListCollectionToReturn);
+                new { ids = idsAsString },
+                shoppingListCollectionToReturn);
         }
     }
 }
