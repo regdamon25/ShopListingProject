@@ -17,6 +17,7 @@ namespace ShopListing.API.Profiles
                     opt => opt.MapFrom(src => src.DateCreated.GetCurrentDate())
                 );
             CreateMap<Models.ShoppingListForCreationDto, Entities.ShoppingList>();
+            
         }
     }
 }

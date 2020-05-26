@@ -1,5 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using ShopListing.API.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ShopListing.API.ValidationAttributes
 {
@@ -7,13 +11,13 @@ namespace ShopListing.API.ValidationAttributes
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var shoppingItem = (ShoppingItemForCreationDto)validationContext.ObjectInstance;
+            var shoppingItem = (ShoppingItemForManipulationDto)validationContext.ObjectInstance;
 
             if(shoppingItem.Name == shoppingItem.Category)
             {
                 return new ValidationResult(
                     ErrorMessage,
-                    new[] { nameof(ShoppingItemForCreationDto) });
+                    new[] { nameof(ShoppingItemForManipulationDto) });
                 
             }
 

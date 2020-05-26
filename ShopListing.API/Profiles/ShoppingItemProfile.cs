@@ -3,7 +3,7 @@ using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ShopListing.API.Models;
+
 
 namespace ShopListing.API.Profiles
 {
@@ -13,7 +13,8 @@ namespace ShopListing.API.Profiles
         {
             CreateMap<Entities.ShoppingItem, Models.ShoppingItemDto>();
             CreateMap<Models.ShoppingItemForCreationDto, Entities.ShoppingItem>();
-            
+            CreateMap<Models.ShoppingItemForUpdateDto, Entities.ShoppingItem>();
+            CreateMap<Entities.ShoppingItem, Models.ShoppingItemForUpdateDto>();
         }
     }
 }

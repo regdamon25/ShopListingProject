@@ -71,5 +71,24 @@ namespace ShopListing.API.Controllers
             Response.Headers.Add("Allow", "GET,OPTIONS,POST");
             return Ok();
         }
+
+        [HttpDelete("{shoppingListId}")]
+
+        public ActionResult DeleteShoppingList(Guid shoppingListId)
+        {
+            var shoppingListFromRepo = _shopListingRepository.GetShoppingList(shoppingListId);
+
+            if(shoppingListFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _shopListingRepository.DeleteShoppingList(shoppingListFromRepo);
+
+            _shopListingRepository.Save();
+
+            return NoContent();
+
+        }
     }
 }

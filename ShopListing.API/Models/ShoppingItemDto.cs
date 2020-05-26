@@ -17,5 +17,6 @@ namespace ShopListing.API.Models
         public decimal Price { get; set; }
 
         public Guid ShoppingListId { get; set; }
+        
     }
 }

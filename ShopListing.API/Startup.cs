@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ using ShopListing.API.DataAccess;
 using ShopListing.API.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Newtonsoft.Json.Serialization;
 
 namespace ShopListing.API
 {
@@ -33,7 +35,14 @@ namespace ShopListing.API
             services.AddControllers(setupAction =>
             {
                 setupAction.ReturnHttpNotAcceptable = true;
-            }).AddXmlDataContractSerializerFormatters()
+            })
+            .AddNewtonsoftJson(setupAction =>
+            {
+                setupAction.SerializerSettings.ContractResolver =
+                new CamelCasePropertyNamesContractResolver();
+            })
+            .AddXmlDataContractSerializerFormatters()
+           
             .ConfigureApiBehaviorOptions(setupAction =>
             {
                 setupAction.InvalidModelStateResponseFactory = context =>
