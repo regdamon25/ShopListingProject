@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.Options;
 
 namespace ShopListing.API.Controllers
@@ -30,6 +31,7 @@ namespace ShopListing.API.Controllers
         }
 
         [HttpGet]
+        [EnableCors("AllowOrigin")]
 
         public IActionResult GetShoppingItems(Guid shoppingListId)
         {
@@ -43,6 +45,8 @@ namespace ShopListing.API.Controllers
         }
 
         [HttpGet("{shoppingItemId}", Name = "GetShoppingItemForShoppingList")]
+        [EnableCors("AllowOrigin")]
+
         public IActionResult GetShoppingItemForShoppingList(Guid shoppingListId, Guid shoppingItemId)
         {
             if (!_shopListingRepository.ShoppingListExists(shoppingListId))
@@ -61,6 +65,7 @@ namespace ShopListing.API.Controllers
         }
 
         [HttpPost]
+        [EnableCors("AllowOrigin")]
 
         public ActionResult<ShoppingItemDto> CreateShoppingItemForShoppingList(
             Guid shoppingListId, ShoppingItemForCreationDto shoppingItem)
@@ -85,6 +90,7 @@ namespace ShopListing.API.Controllers
         }
 
         [HttpPut("{shoppingItemId}")]
+        [EnableCors("AllowOrigin")]
 
         public IActionResult UpdateShoppingItemForShoppingList(
             Guid shoppingListId,
@@ -128,6 +134,7 @@ namespace ShopListing.API.Controllers
         }
 
         [HttpPatch("{shoppingItemId}")]
+        [EnableCors("AllowOrigin")]
 
         public ActionResult PartiallyUpdateShoppingItemForShoppingList(Guid shoppingListId,
             Guid shoppingItemId,
@@ -182,6 +189,7 @@ namespace ShopListing.API.Controllers
         }
 
         [HttpDelete("{shoppingItemId}")]
+        [EnableCors("AllowOrigin")]
 
         public ActionResult DeleteShoppingItemForShoppingList(Guid shoppingListId, Guid shoppingItemId)
         {

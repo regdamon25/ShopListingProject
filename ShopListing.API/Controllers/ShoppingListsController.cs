@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ShopListing.API.Services;
 using ShopListing.API.Models;
+using Microsoft.AspNetCore.Cors;
 using AutoMapper;
 using ShopListing.API.ResourceParameters;
 
@@ -28,6 +29,7 @@ namespace ShopListing.API.Controllers
         
         [HttpGet()]
         [HttpHead]
+        [EnableCors("AllowOrigin")]
 
         public ActionResult<IEnumerable<ShoppingListDto>> GetShoppingLists(
             [FromQuery] ShoppingListResourceParameters shoppingListResourceParameters)
@@ -50,6 +52,7 @@ namespace ShopListing.API.Controllers
         }
 
         [HttpPost]
+        [EnableCors("AllowOrigin")]
 
         public ActionResult<ShoppingListDto> CreateShoppingList(ShoppingListForCreationDto shoppingList)
         {
@@ -65,6 +68,7 @@ namespace ShopListing.API.Controllers
         }
 
         [HttpOptions]
+        [EnableCors("AllowOrigin")]
 
         public IActionResult GetShoppingListOptions()
         {

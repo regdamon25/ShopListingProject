@@ -2,6 +2,7 @@ using AutoMapper;
 using ShopListing.API.Models;
 using ShopListing.API.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace ShopListing.API.Controllers
         }
 
         [HttpGet("({ids})", Name = "GetShoppingListCollection")]
+        [EnableCors("AllowOrigin")]
 
         public IActionResult GetShoppingListCollection(
             [FromRoute]
@@ -50,6 +52,7 @@ namespace ShopListing.API.Controllers
 
 
         [HttpPost]
+        [EnableCors("AllowOrigin")]
 
         public ActionResult<IEnumerable<ShoppingListDto>> CreateShoppingListCollection(
             IEnumerable<ShoppingListForCreationDto> shoppingListCollection)

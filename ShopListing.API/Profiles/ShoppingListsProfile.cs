@@ -13,11 +13,12 @@ namespace ShopListing.API.Profiles
         {
             CreateMap<Entities.ShoppingList, Models.ShoppingListDto>()
                 .ForMember(
+
                     dest => dest.CreatedDate,
                     opt => opt.MapFrom(src => src.DateCreated.GetCurrentDate())
+
                 );
             CreateMap<Models.ShoppingListForCreationDto, Entities.ShoppingList>();
-            
         }
     }
 }

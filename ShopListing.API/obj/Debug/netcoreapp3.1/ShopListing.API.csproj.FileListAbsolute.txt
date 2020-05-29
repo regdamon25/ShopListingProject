@@ -110,5 +110,9 @@ D:\Users\reggi\source\repos\ShopListingProject\ShopListing.API\bin\Debug\netcore
 D:\Users\reggi\source\repos\ShopListingProject\ShopListing.API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\Users\reggi\source\repos\ShopListingProject\ShopListing.API\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 D:\Users\reggi\source\repos\ShopListingProject\ShopListing.API\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+D:\Users\reggi\source\repos\ShopListingProject\ShopListing.API\bin\Debug\netcoreapp3.1\System.Web.Cors.dll
+D:\Users\reggi\source\repos\ShopListingProject\ShopListing.API\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
+D:\Users\reggi\source\repos\ShopListingProject\ShopListing.API\bin\Debug\netcoreapp3.1\System.Web.Http.dll
+D:\Users\reggi\source\repos\ShopListingProject\ShopListing.API\bin\Debug\netcoreapp3.1\System.Web.Http.Cors.dll
 D:\Users\reggi\source\repos\ShopListingProject\ShopListing.API\obj\Debug\netcoreapp3.1\ShopListing.API.csproj.CoreCompileInputs.cache
 D:\Users\reggi\source\repos\ShopListingProject\ShopListing.API\obj\Debug\netcoreapp3.1\ShopListing.API.MvcApplicationPartsAssemblyInfo.cache

@@ -17,7 +17,7 @@ namespace ShopListing.API.Entities
         public string Name { get; set; }
 
         [Required]
-        public DateTimeOffset DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
 
         [Required]
         [MaxLength(50)]
