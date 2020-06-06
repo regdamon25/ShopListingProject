@@ -1,0 +1,71 @@
+<div class="card">
+    <div class="card-header">
+      {{pageTitle}}
+    </div>
+  
+    <div class="card-body"
+    *ngIf='shoppingList'>
+
+      <div class="row">
+
+
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-3">Name:</div>
+            <div class="col-md-6">{{shoppingList.name}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">Theme:</div>
+            <div class="col-md-6">{{shoppingList.theme}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">Date Created:</div>
+            <div class="col-md-6">{{shoppingList.createdDate}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">List Id</div>
+            <div class="col-md-6">{{shoppingList.id}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <button class="btn btn-outline-primary"
+                style="width:80px"
+                [routerLink]="['shopping-items']">
+          Shopping Items {{ shoppingList.shoppingItems }}
+        </button>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-4"
+             *ngIf="shoppingList.imageUrl">
+          <img class="center-block img-responsive"
+               [style.height.px]="150"
+               [style.margin.px]="2"
+               [src]="shoppingList.imageUrl"
+               [title]="shoppingList.shoppingListName">
+        </div>
+      </div>
+  
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <button class="btn btn-outline-secondary mr-3"
+                  style="width:80px"
+                  [routerLink]="['/shopping-lists']"
+                  queryParamsHandling="preserve">
+            <i class="fa fa-chevron-left"></i> Back
+          </button>
+          <button class="btn btn-outline-primary"
+                  style="width:80px"
+                  [routerLink]="['edit']">
+            Edit
+          </button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  
+  <div class="alert alert-danger"
+       *ngIf="errorMessage">{{errorMessage}}
+  </div>
