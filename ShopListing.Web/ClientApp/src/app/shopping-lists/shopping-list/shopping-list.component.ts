@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ShoppingListDataService } from '../shopping-list-data-service.service';
-import { IShoppingList } from '../shopping-list';
+import { ShoppingListDataService } from '../shopping-list-data.service';
+import { IShoppingList } from '../../models/shopping-list';
 
 @Component({
   selector: 'app-shopping-list',

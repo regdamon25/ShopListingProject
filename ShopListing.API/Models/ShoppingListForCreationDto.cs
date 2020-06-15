@@ -9,7 +9,7 @@ namespace ShopListing.API.Models
     {
         public string Name {get; set;}
 
-        public DateTimeOffset DateCreated {get; set;}
+        public DateTime DateCreated {get; set;}
 
         public string Theme { get; set;}
 

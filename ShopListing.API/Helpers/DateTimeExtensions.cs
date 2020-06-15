@@ -7,15 +7,15 @@ namespace ShopListing.API.Helpers
 {
     public static class DateTimeExtensions
     {
-        public static int GetCurrentDate(this DateTime dateTime)
+        public static string GetCurrentDate(this DateTime dateTime)
         {
-            var currentDate = DateTime.UtcNow;
-            int createdDate = currentDate.Year;
+            
+            var createdDate = DateTime.Today.ToString("dd-MMM-yyyy");
 
-            if (currentDate < dateTime.AddYears(createdDate))
-            {
-                createdDate--;
-            }
+            // if (currentDate < dateTime.AddYears(createdDate))
+            // {
+            //     createdDate--;
+            // }
 
             return createdDate;
         }

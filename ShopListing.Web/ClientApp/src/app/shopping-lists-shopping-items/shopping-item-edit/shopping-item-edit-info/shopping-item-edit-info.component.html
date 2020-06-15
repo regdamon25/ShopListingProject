@@ -1,0 +1,94 @@
+<div class="card-body">
+    <form novalidate
+          #shoppingItemForm="ngForm">
+      <fieldset>
+        <legend>Basic Shopping Item Information</legend>
+  
+        <div class="form-group row">
+          <label class="col-md-2 col-form-label"
+                 for="shoppingItemNameId">Item Name</label>
+          <div class="col-md-8">
+            <input class="form-control"
+                   id="shoppingItemNameId"
+                   type="text"
+                   placeholder="Name (required)"
+                   required
+                   minlength="3"
+                   [(ngModel)]=shoppingItem.name
+                   name="name"
+                   #shoppingItemNameVar="ngModel"
+                   [ngClass]="{'is-invalid': (shoppingItemNameVar.touched || 
+                                              shoppingItemNameVar.dirty ||
+                                              shoppingItem.id !== '') && 
+                                              !shoppingItemNameVar.valid }" />
+            <span class="invalid-feedback">
+              <span *ngIf="shoppingItemNameVar.errors?.required">
+                Shopping Item name is required.
+              </span>
+              <span *ngIf="shoppingItemNameVar.errors?.minlength">
+                Shopping Item name must be at least three characters.
+              </span>
+            </span>
+          </div>
+        </div>
+  
+      
+
+        <!-- <div class="form-group row">
+          <label class="col-md-2 col-form-label"
+                 for="shoppingItemCategoryId">Item Category</label>
+          <div class="col-md-8">
+            <input class="form-control"
+                   id="shoppingItemCategoryId"
+                   type="text"
+                   placeholder="Category (required)"
+                   required
+                   [(ngModel)]=shoppingItem.category
+                   name="category"
+                   #shoppingItemCodeVar="ngModel"
+                   [ngClass]="{'is-invalid': (shoppingItemCategoryVar.touched || 
+                                              shoppingItemCategoryVar.dirty ||
+                                              shoppingItem.id !== '') &&
+                                              !shoppingItemCategoryVar.valid }" />
+            <span class="invalid-feedback">
+              <span *ngIf="shoppingItemCategoryVar.errors?.required">
+                Shopping Item Category is required.
+              </span>
+              <span *ngIf="shoppingItemCategoryVar.errors?.minlength">
+                Shopping Item Cateogry must be at least three characters.
+              </span>
+            </span>
+          </div>
+        </div> -->
+        
+        <!--<div class="form-group row">
+            <label class="col-md-2 col-form-label"
+                   for="shoppingItemPriceId">Item Price</label>
+            <div class="col-md-8">
+              <input class="form-control"
+                     id="shoppingItemPriceId"
+                     type="number"
+                     placeholder="Price (required)"
+                     required
+                     [(ngModel)]=shoppingItem.price
+                     name="price"
+                     #shoppingItemPriceVar="ngModel"
+                     [ngClass]="{'is-invalid': (shoppingItemPriceVar.touched || 
+                                                shoppingItemPriceVar.dirty ||
+                                                shoppingItem.id !== '') &&
+                                                !shoppingItemPriceVar.valid }" />
+              <span class="invalid-feedback">
+                <span *ngIf="shoppingItemPriceVar.errors?.required">
+                  Shopping Item price is required.
+                </span>
+              </span>
+            </div>
+          </div> -->
+      </fieldset>
+    </form>
+  </div>
+  
+  <div class='alert alert-danger'
+       *ngIf='errorMessage'>{{errorMessage}}
+  </div>
+

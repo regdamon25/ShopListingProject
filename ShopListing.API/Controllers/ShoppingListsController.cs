@@ -39,6 +39,7 @@ namespace ShopListing.API.Controllers
         }
 
         [HttpGet("{shoppingListId}", Name = "GetShoppingList")]
+        [EnableCors("AllowOrigin")]
         public IActionResult GetShoppingList(Guid shoppingListId)
         {
             var shoppingListFromRepo = _shopListingRepository.GetShoppingList(shoppingListId);
@@ -72,11 +73,12 @@ namespace ShopListing.API.Controllers
 
         public IActionResult GetShoppingListOptions()
         {
-            Response.Headers.Add("Allow", "GET,OPTIONS,POST");
+            Response.Headers.Add("Allow", "GET,OPTIONS,POST,PUT");
             return Ok();
         }
 
         [HttpDelete("{shoppingListId}")]
+        [EnableCors("AllowOrigin")]
 
         public ActionResult DeleteShoppingList(Guid shoppingListId)
         {

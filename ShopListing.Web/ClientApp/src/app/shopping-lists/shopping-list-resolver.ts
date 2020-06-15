@@ -3,9 +3,9 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators'
-import { ShoppingListDataService } from './shopping-list-data-service.service';
-import { IShoppingListResolved } from './shopping-list';
-import { Guid } from 'guid-typescript';
+import { ShoppingListDataService } from './shopping-list-data.service';
+import { IShoppingListResolved } from '../models/shopping-list';
+
 
 
 @Injectable({
@@ -23,7 +23,7 @@ export class ShoppingListResolver implements Resolve<IShoppingListResolved> {
         state: RouterStateSnapshot): Observable<IShoppingListResolved> {
             const id = route.paramMap.get('id');
             if (+id) {
-              const message = `Shopping List id was not a number: ${id}`;
+              const message = `Shopping List id was not a string: ${id}`;
               console.error(message);
               return of({ shoppingList: null, error: message });
             }

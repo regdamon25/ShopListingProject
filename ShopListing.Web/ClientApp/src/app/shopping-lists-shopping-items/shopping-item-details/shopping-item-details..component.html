@@ -1,0 +1,62 @@
+<div class="card">
+    <div class="card-header">
+      {{pageTitle}}
+    </div>
+  
+    <div class="card-body"
+    *ngIf='shoppingItems'>
+
+      <div class="row">
+
+
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-3">Name:</div>
+            <div class="col-md-6">{{shoppingItem.name}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">Category:</div>
+            <div class="col-md-6">{{shoppingItem.category}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">Price:</div>
+            <div class="col-md-6">{{shoppingItem.price}}</div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">Item Id:</div>
+            <div class="col-md-6">{{shoppingItem.id}}</div>
+          </div>
+        </div>
+  
+        <div class="col-md-4"
+             *ngIf="shoppingItem.imageUrl">
+          <img class="center-block img-responsive"
+               [style.height.px]="150"
+               [style.margin.px]="2"
+               [src]="shoppingItem.imageUrl"
+               [title]="shoppingItem.shoppingItemName">
+        </div>
+      </div>
+  
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <button class="btn btn-outline-secondary mr-3"
+                  style="width:80px"
+                  [routerLink]="['/shopping-items']"
+                  queryParamsHandling="preserve">
+            <i class="fa fa-chevron-left"></i> Back
+          </button>
+          <button class="btn btn-outline-primary"
+                  style="width:80px"
+                  [routerLink]="['edit-item']">
+            Edit
+          </button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  
+  <div class="alert alert-danger"
+       *ngIf="errorMessage">{{errorMessage}}
+  </div>

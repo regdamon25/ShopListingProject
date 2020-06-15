@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ShoppingListDataServiceService } from './shopping-list-data-service.service';
+import { ShoppingListDataService } from './shopping-list-data.service';
 
 describe('ShoppingListDataServiceService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: ShoppingListDataServiceService = TestBed.get(ShoppingListDataServiceService);
+    const service: ShoppingListDataService = TestBed.get(ShoppingListDataService);
     expect(service).toBeTruthy();
   });
 });

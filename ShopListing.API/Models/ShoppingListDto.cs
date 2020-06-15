@@ -13,7 +13,7 @@ namespace ShopListing.API.Models
         public string Name { get; set; }
 
         
-        public int CreatedDate { get; set; }
+        public string CreatedDate { get; set; }
 
         public string Theme { get; set; }
 

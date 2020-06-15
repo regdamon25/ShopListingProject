@@ -56,7 +56,8 @@
               <td>{{ shoppingList.id }}</td>
               
               <td>
-                <button class="btn btn-outline-primary btn-sm">
+                <button class="btn btn-outline-primary btn-sm"
+                [routerLink]="[shoppingList.id, 'edit']">
                   Edit
                 </button>
               </td>

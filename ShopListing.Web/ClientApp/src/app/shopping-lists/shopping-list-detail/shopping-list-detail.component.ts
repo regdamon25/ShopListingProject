@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute} from '@angular/router';
 
-import { IShoppingList, IShoppingListResolved } from '../shopping-list';
+import { IShoppingList, IShoppingListResolved } from '../../models/shopping-list';
 
 
 

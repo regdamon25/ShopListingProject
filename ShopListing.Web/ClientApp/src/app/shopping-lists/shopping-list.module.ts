@@ -3,43 +3,69 @@ import { RouterModule } from '@angular/router';
 
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingListDetailComponent } from './shopping-list-detail/shopping-list-detail.component';
-
-import { SharedModule } from './shared/shared/shared.module'
+import { ShoppingListEditComponent } from './shopping-list-edit/shopping-list-edit.component';
+import { ShoppingListEditInfoComponent } from './shopping-list-edit/shopping-list-edit-info.component';
 import { ShoppingListResolver } from './shopping-list-resolver';
-import { ShoppingItemsComponent } from './shopping-items/shopping-items.component';
-import { ShoppingListEditComponent } from './shopping-list-edit/shopping-list-edit/shopping-list-edit.component';
+
+
+import { SharedModule } from '../shared/shared.module'
+import { ShoppingListEditGuard } from './shopping-list-edit/shopping-list-edit.guard';
+import { ShoppingItemsComponent } from '../shopping-lists-shopping-items/shopping-items.component';
+import { ShoppingItemEditComponent } from '../shopping-lists-shopping-items/shopping-item-edit/shopping-item-edit.component';
+import { ShoppingItemEditGuard } from '../shopping-lists-shopping-items/shopping-item-edit/shopping-item-edit.guard';
+import { ShoppingItemEditInfoComponent } from '../shopping-lists-shopping-items/shopping-item-edit/shopping-item-edit-info/shopping-item-edit-info.component';
+import { ShoppingItemResolver } from '../shopping-lists-shopping-items/shopping-item-resolver';
+
 
 
 
 
 
 @NgModule({
-  declarations: [ShoppingListComponent, ShoppingListDetailComponent, ShoppingItemsComponent, ShoppingListEditComponent],
+  declarations: [ShoppingListComponent, ShoppingListDetailComponent,  ShoppingListEditComponent, ShoppingListEditInfoComponent, ShoppingItemsComponent, ShoppingItemEditComponent, ShoppingItemEditInfoComponent],
   imports: [
-
+    SharedModule,
     RouterModule.forChild([
       {
-        path: 'shopping-lists',
+        path: '',
         component: ShoppingListComponent
       },
       {
-        path: 'shopping-lists/:id',
+        path: ':id',
         component: ShoppingListDetailComponent,
         resolve: { resolvedData: ShoppingListResolver }
       },
       {
-        path: 'shopping-lists/:id/edit',
+        path: ':id/edit',
         component: ShoppingListEditComponent,
+        canDeactivate: [ShoppingListEditGuard],
+        resolve: { resolvedData: ShoppingListResolver},
+        children: [
+          { path: '', redirectTo: 'info', pathMatch: 'full' },
+          { path: 'info', component: ShoppingListEditInfoComponent },
+          
+        ]
+      },
+      {
+        path: ':id/shopping-items',
+        component: ShoppingItemsComponent,
         resolve: { resolvedData: ShoppingListResolver}
       },
       {
-        path: 'shopping-lists/:id/shopping-items',
-        component: ShoppingItemsComponent,
-        resolve: { resolvedData: ShoppingListResolver }
+        path: ':id/shopping-items/:itemId/edit-item',
+        component: ShoppingItemEditComponent,
+        canDeactivate: [ShoppingItemEditGuard],
+        resolve: { resolvedData: ShoppingItemResolver},
+        children: [
+          { path: '',
+            redirectTo: 'item-info',
+            pathMatch: 'full' 
+          },
+          { path: 'item-info',
+           component: ShoppingItemEditInfoComponent }
+        ]
       }
     ]),
-    SharedModule
-
   ]
 })
 export class ShoppingListModule { }
