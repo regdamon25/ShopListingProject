@@ -3,11 +3,8 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators'
-
-
 import { ShoppingListDataService } from '../shopping-lists/shopping-list-data.service';
-import { IShoppingListResolved } from '../models/shopping-list';
-import { IShoppingItemResolved } from '../models/shopping-item';
+import {ShoppingListResolved, ShoppingItemResolved, ShoppingItem } from '../models/shopping-list';
 
 
 
@@ -16,7 +13,7 @@ import { IShoppingItemResolved } from '../models/shopping-item';
     providedIn: 'root'
 })
 
-export class ShoppingItemResolver implements Resolve<IShoppingItemResolved> {
+export class ShoppingItemResolver implements Resolve<ShoppingItemResolved> {
 
     constructor(private shoppingListDataService: ShoppingListDataService) { }
 
@@ -24,18 +21,18 @@ export class ShoppingItemResolver implements Resolve<IShoppingItemResolved> {
     
 
     resolve(route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): Observable<IShoppingItemResolved> {
+        state: RouterStateSnapshot): Observable<ShoppingItemResolved> {
             const id = route.paramMap.get('id');
-            const itemId = route.paramMap.get('itemId')
-            if (+id && +itemId) {
-              const message = `Shopping Item id was not a string: ${id}`;
+            const itemId = route.paramMap.get('itemId');
+            if (id !=='' && !itemId) {
+              const message = `Shopping Item id was not a string: ${itemId}`;
               console.error(message);
               return of({ shoppingItem: null, error: message });
             }
     
             
 
-        return this.shoppingListDataService.getShoppingItemForShoppingList(id, itemId)
+        return this.shoppingListDataService.getShoppingItem(id,itemId)
             .pipe(
                 map(shoppingItem => ({ shoppingItem: shoppingItem })),
                 catchError(error => {

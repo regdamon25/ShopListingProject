@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { IShoppingItem } from 'src/app/models/shopping-item';
+import { ShoppingItem } from 'src/app/models/shopping-list';
 
 @Component({
   selector: 'app-shopping-item-edit-info',
@@ -13,8 +13,7 @@ export class ShoppingItemEditInfoComponent implements OnInit {
 
 
   errorMessage: string;
-  
-  shoppingItem: IShoppingItem;
+  shoppingItem: ShoppingItem;
 
   constructor(private route: ActivatedRoute) { }
 
@@ -24,6 +23,7 @@ export class ShoppingItemEditInfoComponent implements OnInit {
         this.shoppingItemForm.reset();
       }
 
+      
       this.shoppingItem = data['resolvedData'].shoppingItem;
     });
   }

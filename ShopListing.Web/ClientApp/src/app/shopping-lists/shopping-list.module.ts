@@ -3,13 +3,13 @@ import { RouterModule } from '@angular/router';
 
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingListDetailComponent } from './shopping-list-detail/shopping-list-detail.component';
-import { ShoppingListEditComponent } from './shopping-list-edit/shopping-list-edit.component';
-import { ShoppingListEditInfoComponent } from './shopping-list-edit/shopping-list-edit-info.component';
+import { ShoppingListEditComponent } from './shopping-list-add/shopping-list-add.component';
+import { ShoppingListEditInfoComponent } from './shopping-list-add/shopping-list-add-info.component';
 import { ShoppingListResolver } from './shopping-list-resolver';
 
 
 import { SharedModule } from '../shared/shared.module'
-import { ShoppingListEditGuard } from './shopping-list-edit/shopping-list-edit.guard';
+import { ShoppingListEditGuard } from './shopping-list-add/shopping-list-edit.guard';
 import { ShoppingItemsComponent } from '../shopping-lists-shopping-items/shopping-items.component';
 import { ShoppingItemEditComponent } from '../shopping-lists-shopping-items/shopping-item-edit/shopping-item-edit.component';
 import { ShoppingItemEditGuard } from '../shopping-lists-shopping-items/shopping-item-edit/shopping-item-edit.guard';
@@ -35,6 +35,7 @@ import { ShoppingItemResolver } from '../shopping-lists-shopping-items/shopping-
         component: ShoppingListDetailComponent,
         resolve: { resolvedData: ShoppingListResolver }
       },
+      
       {
         path: ':id/edit',
         component: ShoppingListEditComponent,
@@ -54,15 +55,18 @@ import { ShoppingItemResolver } from '../shopping-lists-shopping-items/shopping-
       {
         path: ':id/shopping-items/:itemId/edit-item',
         component: ShoppingItemEditComponent,
-        canDeactivate: [ShoppingItemEditGuard],
         resolve: { resolvedData: ShoppingItemResolver},
+        canDeactivate: [ShoppingItemEditGuard],
         children: [
           { path: '',
             redirectTo: 'item-info',
-            pathMatch: 'full' 
+            pathMatch: 'full '
           },
           { path: 'item-info',
-           component: ShoppingItemEditInfoComponent }
+           component: ShoppingItemEditInfoComponent
+          },
+          
+
         ]
       }
     ]),

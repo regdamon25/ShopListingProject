@@ -14,12 +14,13 @@
                    placeholder="Name (required)"
                    required
                    minlength="3"
+                   maxlength="50"
                    [(ngModel)]=shoppingItem.name
                    name="name"
                    #shoppingItemNameVar="ngModel"
                    [ngClass]="{'is-invalid': (shoppingItemNameVar.touched || 
-                                              shoppingItemNameVar.dirty ||
-                                              shoppingItem.id !== '') && 
+                                              shoppingItemNameVar.dirty )
+                                               && 
                                               !shoppingItemNameVar.valid }" />
             <span class="invalid-feedback">
               <span *ngIf="shoppingItemNameVar.errors?.required">
@@ -34,7 +35,7 @@
   
       
 
-        <!-- <div class="form-group row">
+        <div class="form-group row">
           <label class="col-md-2 col-form-label"
                  for="shoppingItemCategoryId">Item Category</label>
           <div class="col-md-8">
@@ -43,25 +44,30 @@
                    type="text"
                    placeholder="Category (required)"
                    required
+                   minlength="3"
+                   maxlength="50"
                    [(ngModel)]=shoppingItem.category
                    name="category"
-                   #shoppingItemCodeVar="ngModel"
+                   #shoppingItemCategoryVar="ngModel"
                    [ngClass]="{'is-invalid': (shoppingItemCategoryVar.touched || 
-                                              shoppingItemCategoryVar.dirty ||
-                                              shoppingItem.id !== '') &&
+                                              shoppingItemCategoryVar.dirty
+                                              ) &&
                                               !shoppingItemCategoryVar.valid }" />
             <span class="invalid-feedback">
               <span *ngIf="shoppingItemCategoryVar.errors?.required">
                 Shopping Item Category is required.
               </span>
               <span *ngIf="shoppingItemCategoryVar.errors?.minlength">
-                Shopping Item Cateogry must be at least three characters.
+                Shopping Item Cateogry must be at least 3 characters.
+              </span>
+              <span *ngIf="shoppingItemCategoryVar.errors?.maxlength">
+                Shopping Item Cateogry must be no more than 50 characters.
               </span>
             </span>
           </div>
-        </div> -->
+        </div>
         
-        <!--<div class="form-group row">
+        <div class="form-group row">
             <label class="col-md-2 col-form-label"
                    for="shoppingItemPriceId">Item Price</label>
             <div class="col-md-8">
@@ -74,8 +80,8 @@
                      name="price"
                      #shoppingItemPriceVar="ngModel"
                      [ngClass]="{'is-invalid': (shoppingItemPriceVar.touched || 
-                                                shoppingItemPriceVar.dirty ||
-                                                shoppingItem.id !== '') &&
+                                                shoppingItemPriceVar.dirty
+                                                ) &&
                                                 !shoppingItemPriceVar.valid }" />
               <span class="invalid-feedback">
                 <span *ngIf="shoppingItemPriceVar.errors?.required">
@@ -83,7 +89,7 @@
                 </span>
               </span>
             </div>
-          </div> -->
+          </div>
       </fieldset>
     </form>
   </div>

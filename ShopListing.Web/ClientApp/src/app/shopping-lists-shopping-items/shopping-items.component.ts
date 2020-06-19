@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IShoppingList, IShoppingListResolved } from '../models/shopping-list';
+import { ShoppingList, ShoppingListResolved, ShoppingItem } from '../models/shopping-list';
 import { ShoppingListDataService } from '../shopping-lists/shopping-list-data.service';
-import { IShoppingItem } from '../models/shopping-item';
 import { map } from 'rxjs/operators';
 
 
@@ -15,7 +14,7 @@ export class ShoppingItemsComponent implements OnInit {
 
   pageTitle = 'Shopping List Items';
   errorMessage: string;
-  shoppingList: IShoppingList | undefined;
+  shoppingList: ShoppingList | undefined;
   shoppingItems: any = {}; //??
   
 
@@ -23,7 +22,7 @@ export class ShoppingItemsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
-      const resolvedData: IShoppingListResolved =
+      const resolvedData: ShoppingListResolved =
         this.route.snapshot.data['resolvedData'];
       this.errorMessage = resolvedData.error;
       this.onShoppingListRetrieved(resolvedData.shoppingList);
@@ -43,7 +42,7 @@ export class ShoppingItemsComponent implements OnInit {
     });
   }
 
-  onShoppingListRetrieved(shoppingList: IShoppingList): void {
+  onShoppingListRetrieved(shoppingList: ShoppingList): void {
     this.shoppingList = shoppingList
 
     if (this.shoppingList) {

@@ -2,8 +2,8 @@ import { Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
-import { IShoppingList, genId} from '../models/shopping-list';
-import { IShoppingItem } from '../models/shopping-item';
+import { ShoppingList, ShoppingItem, ShoppingListResolved} from '../models/shopping-list';
+
 
 const httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -17,13 +17,24 @@ const httpOptions = {
 export class ShoppingListDataService {
    
     private myAppUrl = "http://localhost:49914/api/shoppingLists";
+    private endpoint = 'shoppingItems';
+
+    public shoppingList: ShoppingList;
+    
+
+    httpOptions = {
+        headers: new HttpHeaders({ 
+            'Content-Type': 'application/json'
+        })
+      };
+      
     constructor(private http: HttpClient) {
 
     }
 
-    getShoppingLists(): Observable<IShoppingList[]> {
+    getShoppingLists(): Observable<ShoppingList[]> {
 
-        return this.http.get<IShoppingList[]>(this.myAppUrl)
+        return this.http.get<ShoppingList[]>(this.myAppUrl)
             .pipe(
                 tap(data => console.log(JSON.stringify(data))),
                 catchError(this.handleError)
@@ -32,34 +43,35 @@ export class ShoppingListDataService {
 
 
 
-    getShoppingList(id: string): Observable<IShoppingList> {
+    getShoppingList(id: string): Observable<ShoppingList> {
         if ( id === '0') {
             return of(this.initializeShoppingList());
         }
         const url = `${this.myAppUrl}/${id}`;
-        return this.http.get<IShoppingList>(url)
+        return this.http.get<ShoppingList>(url)
         .pipe(
             tap(data => console.log('getShoppingList: ' + JSON.stringify(data))),
             catchError(this.handleError)
         );
     }
 
-    getShoppingItemsForShoppingList(id: string): Observable<IShoppingList> {
+    getShoppingItemsForShoppingList(id: string): Observable<ShoppingList> {
         
-        const url = `${this.myAppUrl}/${id}` + '/shoppingItems';
-        return this.http.get<IShoppingList>(url)
+        const url = `${this.myAppUrl}/${id}/${this.endpoint}`;
+        return this.http.get<ShoppingList>(url)
             .pipe(
                 tap(data => console.log('All: ' + JSON.stringify(data))),
                 catchError(this.handleError)
             );
     }
 
-    getShoppingItemForShoppingList(id: string, itemId: string): Observable<IShoppingItem> {
-        if (id !== '' && itemId === '') {
+    getShoppingItem(id: string, itemId: string): Observable<any> {
+        
+        if (id !== '' && itemId === '0') {
             return of(this.initializeShoppingItem());
         }
-        const url = `${this.myAppUrl}/${id}` + '/shoppingItems/' + `${itemId}`;
-        return this.http.get<IShoppingItem>(url)
+        const url = `${this.myAppUrl}/${id}/${this.endpoint}/${itemId}`;
+        return this.http.get(url)
             .pipe(
                 tap(data => console.log('All: ' + JSON.stringify(data))),
                 catchError(this.handleError)
@@ -70,85 +82,73 @@ export class ShoppingListDataService {
        
         
 
-    addShoppingList(shoppingList: IShoppingList): Observable<HttpResponse<IShoppingList>> {
+    addShoppingList(shoppingList: ShoppingList): Observable<HttpResponse<ShoppingList>> {
 
-        return this.http.post<IShoppingList>(this.myAppUrl, shoppingList, { observe: 'response' })
+        return this.http.post<ShoppingList>(this.myAppUrl, shoppingList, { observe: 'response' })
             .pipe(
                 tap(data => console.log('addShoppingList: ' + JSON.stringify(data))),
                 catchError(this.handleError)
             );
     }
 
-    addShoppingItem(shoppingItem: IShoppingItem): Observable<HttpResponse<IShoppingItem>> {
-
-        return this.http.post<IShoppingItem>(this.myAppUrl, shoppingItem, { observe: 'response' })
+    addShoppingItemToShoppingList(id: ShoppingItem, shoppingItem: ShoppingItem): Observable<HttpResponse<ShoppingItem>> {
+        
+        
+        return this.http.post<ShoppingItem>(`${this.myAppUrl}/${id}/${this.endpoint}`, shoppingItem, { observe: 'response' })
             .pipe(
                 tap(data => console.log('addShoppingItem: ' + JSON.stringify(data))),
                 catchError(this.handleError)
             );
     }
 
-    deleteShoppingList(id: string): Observable<IShoppingList> {
+    deleteShoppingList(id: string): Observable<ShoppingList> {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         const url = `${this.myAppUrl}/${id}`;
-        return this.http.delete<IShoppingList>(url, { headers }).pipe(
+        return this.http.delete<ShoppingList>(url, { headers }).pipe(
             tap(data => console.log('deleteShoppingList: ' + id)),
             catchError(this.handleError)
         );
     }
 
-    deleteShoppingItem(id: string): Observable<IShoppingItem> {
+    deleteShoppingItem(id: string, itemId: string): Observable<ShoppingItem> {
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        const url = `${this.myAppUrl}/${id}` + '/shoppingItems';
-        return  this.http.delete<IShoppingItem>(url, { headers }).pipe(
+        const url = `${this.myAppUrl}/${id}/${this.endpoint}/${itemId}`;
+        return  this.http.delete<ShoppingItem>(url, { headers }).pipe(
             tap(data => console.log('deleteShoppingItem: ' + id)),
             catchError(this.handleError)
         );
     }
     
-    updateShoppingList(shoppingList: IShoppingList): Observable<IShoppingList> {
+    updateShoppingItem(id: ShoppingItem, shoppingItem: ShoppingItem): Observable<any> {
         
-        const url = `${this.myAppUrl}/${shoppingList.id}`;
-        return this.http.put<IShoppingList>(url, shoppingList, httpOptions)
+        const url = `${this.myAppUrl}/${id}/${this.endpoint}/${shoppingItem.id}`;
+        return this.http.put(url, shoppingItem, {headers: new HttpHeaders({'Content-Type': 'application/json'})} )
         .pipe(
-            tap(() => console.log('updateShoppingList: ' + shoppingList.id)),
-            //Return the shoppingList on an update
-            map(() => shoppingList),
             catchError(this.handleError)
         );
     }
 
-    updateShoppingItem(shoppingItem: IShoppingItem): Observable<IShoppingItem> {
-        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        const url = `${this.myAppUrl}/${shoppingItem.id}`;
-        return this.http.put<IShoppingItem>(url, shoppingItem, { headers })
-        .pipe(
-            tap(() => console.log('updateShoppingItem: ' + shoppingItem.id)),
-            //Return the shoppingList on an update
-            map(() => shoppingItem),
-            catchError(this.handleError)
-        );
-    }
-
-    private handleError(err: HttpErrorResponse) {
+    private handleError<T>(operation = 'operation', result?: T){
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
         let errorMessage: string;
-        if (err.error instanceof ErrorEvent) {
-            // A client-side or network error occurred. Handle it accordingly.
-            errorMessage = `An error occurred: ${err.error.message}`;
-        } else {
-            // The backend returned an unsuccessful response code.
-            // The response body may contain clues as to what went wrong,
-            errorMessage = `Backend returned code ${err.status}: ${err.error}`;
-        }
-        console.error(err);
-        return throwError(errorMessage);
+        
+        return (error: any): Observable<T> => {
+
+            // TODO: send the error to remote logging infrastructure
+            console.error(error); // log to console instead
+      
+            // TODO: better job of transforming error for user consumption
+            console.log(`${operation} failed: ${error.message}`);
+      
+            // Let the app keep running by returning an empty result.
+            return of(result as T);
     }
+}
 
     
 
-    private initializeShoppingList(): IShoppingList {
+    private initializeShoppingList(): ShoppingList {
         // Return an initialized object
         
         return {
@@ -160,7 +160,7 @@ export class ShoppingListDataService {
         };
     }
 
-    private initializeShoppingItem(): IShoppingItem {
+    private initializeShoppingItem(): ShoppingItem {
 
         return {
             id: null,

@@ -67,7 +67,7 @@ export class ShoppingListEditComponent implements OnInit {
       //Don't delete, it was never saved.
       this.onSaveComplete(`${this.shoppingList.name} was deleted`);
     } else {
-      if (confirm(`Really delete the product: ${this.shoppingList.name}?`)) {
+      if (confirm(`Really delete the Shopping List: ${this.shoppingList.name}?`)) {
         this.shoppingListDataService.deleteShoppingList(this.shoppingList.id).subscribe({
           next: () => this.onSaveComplete(`${this.shoppingList.name} was deleted`),
           error: err => this.errorMessage = err

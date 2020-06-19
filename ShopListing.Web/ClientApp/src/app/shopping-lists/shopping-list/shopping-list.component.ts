@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ShoppingListDataService } from '../shopping-list-data.service';
-import { IShoppingList } from '../../models/shopping-list';
+import { ShoppingList } from '../../models/shopping-list';
 
 @Component({
   selector: 'app-shopping-list',
@@ -27,8 +27,8 @@ export class ShoppingListComponent implements OnInit {
     this.filteredShoppingLists = this.listFilter ? this.performFilter(this.listFilter) : this.shoppingLists;
   }
 
-  filteredShoppingLists: IShoppingList[] = [];
-  shoppingLists: IShoppingList[] = [];
+  filteredShoppingLists: ShoppingList[] = [];
+  shoppingLists: ShoppingList[] = [];
 
   constructor(private shoppingListDataService: ShoppingListDataService, private route: ActivatedRoute) { }
 
@@ -45,11 +45,12 @@ export class ShoppingListComponent implements OnInit {
     });
   }
 
-  performFilter(filterBy: string): IShoppingList[] {
+  performFilter(filterBy: string): ShoppingList[] {
     filterBy = filterBy.toLocaleLowerCase();
-    return this.shoppingLists.filter((shoppingList: IShoppingList) => 
+    return this.shoppingLists.filter((shoppingList: ShoppingList) => 
     shoppingList.name.toLocaleLowerCase().indexOf(filterBy) !== -1);
   }
+  
 
   toggleImage(): void {
     this.showImage = !this.showImage;

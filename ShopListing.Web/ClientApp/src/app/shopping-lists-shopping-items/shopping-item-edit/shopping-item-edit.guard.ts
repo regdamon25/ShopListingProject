@@ -14,10 +14,10 @@ export class ShoppingItemEditGuard implements CanDeactivate<ShoppingItemEditComp
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
 
-      // if (component.isDirty) {
-      //   const shoppingItemName = component.shoppingItem.name || 'New Shopping Item';
-      //   return confirm(`Navigate away and lose all changes to ${shoppingItemName}?`);
-      // }
+      if (component.isDirty) {
+        const shoppingItemName = component.shoppingItem.name || 'New Shopping Item';
+        return confirm(`Navigate away and lose all changes to ${shoppingItemName}?`);
+      }
     return true;
   }
   

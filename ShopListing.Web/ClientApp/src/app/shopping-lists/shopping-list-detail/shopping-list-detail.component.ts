@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute} from '@angular/router';
 
-import { IShoppingList, IShoppingListResolved } from '../../models/shopping-list';
+import { ShoppingList, ShoppingListResolved } from '../../models/shopping-list';
 
 
 
@@ -14,14 +14,14 @@ export class ShoppingListDetailComponent implements OnInit {
 
   pageTitle = 'Shopping List Detail';
   errorMessage: string;
-  shoppingList: IShoppingList | undefined;
+  shoppingList: ShoppingList | undefined;
 
   constructor(private route: ActivatedRoute) { }
 
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
-      const resolvedData: IShoppingListResolved =
+      const resolvedData: ShoppingListResolved =
         this.route.snapshot.data['resolvedData'];
       this.errorMessage = resolvedData.error;
       this.onShoppingListRetrieved(resolvedData.shoppingList);
@@ -29,7 +29,7 @@ export class ShoppingListDetailComponent implements OnInit {
   }
     
   
-  onShoppingListRetrieved(shoppingList: IShoppingList): void {
+  onShoppingListRetrieved(shoppingList: ShoppingList): void {
     this.shoppingList = shoppingList;
     
     if (this.shoppingList) {

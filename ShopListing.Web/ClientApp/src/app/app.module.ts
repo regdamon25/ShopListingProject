@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 
 /* Feature Modules */
+import { UserModule } from './user/user.module';
 import { MessageModule } from './messages/message.module';
 
 
@@ -34,6 +35,7 @@ import { MessageModule } from './messages/message.module';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    UserModule,
     MessageModule,
     AppRoutingModule
   ],
